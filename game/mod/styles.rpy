@@ -1,7 +1,7 @@
 init 1:# Styles
 
     style notify_item_frame:
-        background Frame("gui/textbox.png", 180,8,180,8, tile=gui.frame_tile)
+        background Frame("mod/images/textbox.png", 90,8,90,8, tile=gui.frame_tile)
         padding (180,8,180,8)
     style notify_item_text:
         properties gui.text_properties("notify")
@@ -68,7 +68,7 @@ init 1:# Styles
     style quick_menu_top_center_text is quick_menu_text
     style quick_menu_top_center_hbox:
         xalign 0.5
-        yalign 0.05
+        yalign 0.0
     style quick_menu_top_center_button is quick_button
     style quick_menu_top_center_button_text is quick_button_text
 
