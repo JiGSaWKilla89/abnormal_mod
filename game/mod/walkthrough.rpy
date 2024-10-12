@@ -153,13 +153,13 @@ init 1000 python:
                 },
             ("game/script.rpy", 8367) : {
                 "I've gone as far as I'm willing to go today..." : {
-                    "wt" : f"{_dech} {_recc}",
+                    "wt" : f"{_dech}",
                     "hint" : [
                         ],
                     "color" : pink
                     },
                 "*gulp* What if I kept serving people like this..?": {
-                    "wt" : f"{_dech}",
+                    "wt" : f"{_dech} {_recc}",
                     "hint" : [
                         ],
                     "color" : pink
