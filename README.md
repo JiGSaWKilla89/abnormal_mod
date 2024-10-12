@@ -8,4 +8,4 @@ Drop the contents into game folder
 
 If the mod is installed correctly it will show on the main menu mod installed
 
-The Current Mod Version is 0.7
+The Current Mod Version is **0.7**
