@@ -101,4 +101,3 @@ init -5 python:
         except requests.RequestException as e:
             renpy.write_log(f"Request Error: {e}")
             return "Request Error", gui.jg_mod_version
-
