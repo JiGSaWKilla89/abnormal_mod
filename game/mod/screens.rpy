@@ -652,7 +652,7 @@ init 5:# Screens
 
         if persistent._quick_menu_layout == "top_center":
             mousearea:
-                align (0.5,0.05)
+                align (0.5,0.0)
                 xysize (config.screen_width, gui.text_size)
                 hovered ToggleScreenVariable("quick_hover", True),With(dissolve)
                 unhovered ToggleScreenVariable("quick_hover", False),With(dissolve)
@@ -991,12 +991,12 @@ init 5:# Screens
         zorder 1000
         tag notify_container
         fixed:
-            align (0.5,0.05)
+            align (0.5, (0.05 if persistent._quick_menu_layout == "top_center" else 0.0))
             #pos (5, 50)
 
             vbox:
                 xalign 0.5
-                yalign 0.05
+                yalign (0.05 if persistent._quick_menu_layout == "top_center" else 0.02)
                 #xmaximum 250
                 spacing 5
 
@@ -1009,7 +1009,7 @@ init 5:# Screens
 
     transform custom_notify_appear():
         xalign 0.5
-        ypos 130
+        #ypos (10 if persistent._quick_menu_layout == "top_center" else 0)
 
         yoffset -15.0 yzoom 0.0 zoom 0.7 alpha 0.5
 
