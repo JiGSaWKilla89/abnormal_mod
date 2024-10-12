@@ -11,7 +11,7 @@ Toggle Fancy Text Always Effect: {color=FB4301}R{/color}
 Toggle Walkthrough: {color=FB4301}W{/color}
 Toggle Walkthrough Choice Tooltips: {color=FB4301}Shift+T{/color}
 Toggle Notifications Stack/Standard: {color=FB4301}N{/color}
-Adjust Textbox Visibility Keypad +/-
+Adjust Textbox Visibility Keypad {color=FB4301}+/-{/color}
 """
 
     wt_choice_tooltip = """Each Choice marked with either Good Choice/Bad Choice is
