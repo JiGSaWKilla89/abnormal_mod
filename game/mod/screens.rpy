@@ -168,6 +168,7 @@ init 5:# Screens
         text "Notifications"
         text "1. Toggle Notification Stack/Standard using {a=#:None}{color=#f00}(N){/color}{/a} or in preferences menu" xoffset 50 tooltip "This can be toggled in the main menu or in the game"
         text "Credit to {a=https://github.com/RenpyRemix/multi-notify}RenpyRemix{/a} for stackable notifications" xoffset 50 tooltip "RenpyRemix Github"
+        text "Credit to {a=https://github.com/valery-iwanofu/renpy-shader-collection}valery-iwanofu{/a} for color picker" xoffset 50 tooltip "valery-iwanofu Github"
         text ""
         if mod_updated[0] not in ["Mod up-to-date", "JSON Error", "Could Not Connect to Host", "HTTP Error", "Timeout", "Request Error", "None"]:
             text "Latest MOD update available at {a=gui.mod_update_url}JiGSaW Games Studios{/a}" tooltip "Mod Developer"
@@ -312,14 +313,16 @@ init 5:# Screens
         label title
 
         if main_menu:
-            key "game_menu" action ShowMenu("main_menu")
+            key "game_menu":
+                if title == "Walkthrough Colors":
+                    action Hide("color_picker_wt", transition=dissolve)
+                else:
+                    action ShowMenu("main_menu")
         else:
             if title == "Walkthrough Colors":
                 key "game_menu" action Hide("color_picker_wt", transition=dissolve)
             else:
                 key "game_menu" action Return()
-
-
 
     screen preferences():
 
@@ -1019,4 +1022,3 @@ init 5:# Screens
         pause .5
 
         function finish_notify
-
