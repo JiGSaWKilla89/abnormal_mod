@@ -172,7 +172,7 @@ init 5:# Screens
         text ""
         if mod_updated[0] not in ["Mod up-to-date", "JSON Error", "Could Not Connect to Host", "HTTP Error", "Timeout", "Request Error", "None"]:
             text "Latest MOD update available at {a=gui.mod_update_url}JiGSaW Games Studios{/a}" tooltip "Mod Developer"
-        text "If you like what I do {a=https://buymeacoffee.com/jigsawgames}Buy me a beer{/a}" tooltip "Mod Developer BuyMeACoffee Page"
+        text "If you like what I do {a=[gui.donate_mod]}Buy me a beer{/a}" tooltip "Mod Developer BuyMeACoffee Page"
         text "And lastly {a=http://patreon.com/EmeraldDeceivers}Emerald Deceivers{/a} for developing [config.name!t]" tooltip "Developer Patreon"
 
     screen confirm(message, yes_action, no_action):
