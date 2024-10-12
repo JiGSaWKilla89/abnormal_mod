@@ -131,7 +131,10 @@ init -5 python:
             return max(0, min(255, value))
 
         # Convert hex to RGB(A)
-        hex_color = hex_color.lstrip('#')
+        try:
+            hex_color = hex_color.lstrip('#')
+        except:
+            hex_color = hex_color.hexcode.lstrip('#')
 
         # Handle different hex lengths
         if len(hex_color) == 3:  # #RGB
