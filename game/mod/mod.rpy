@@ -618,6 +618,11 @@ init 1:
 
 init python:
     def read_rpy_file(file):
-        with renpy.open_file(file, encoding="utf-8") as readfile:
-            return readfile.readlines()
+        try:
+            with renpy.open_file(file, encoding="utf-8") as readfile:
+                return readfile.readlines()
+        except:
+            with open(os.path.join(config.basedir, file), "r", encoding="utf-8") as readfile:
+                return readfile.readlines()
+
 
