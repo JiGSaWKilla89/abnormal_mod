@@ -1,3 +1,18 @@
+default persistent._good_choice_color = "#0F0"
+default persistent._default_good_choice_color = "#0F0"
+
+default persistent._bad_choice_color = "#F00"
+default persistent._default_bad_choice_color = "#F00"
+
+default persistent._recommended_choice_color = "#FF0"
+default persistent._default_recommended_choice_color = "#FF0"
+
+default persistent._best_choice_color = "#00F"
+default persistent._default_best_choice_color = "#00F"
+
+default persistent._dealers_choice_color = "#F0F"
+default persistent._default_dealers_choice_color = "#F0F"
+
 init 1000 python:
     """
     Within this script is all the functions necessary to list, 
@@ -7,13 +22,14 @@ init 1000 python:
     import os
 
     use_archive_format = False
+    
 
     def walkthrough_dict():
-        green = "#0F0"
-        blue = "#00F"
-        yellow = "#FF0"
-        red = "#F00"
-        pink = "#F0F"
+        green = persistent._good_choice_color
+        blue = persistent._best_choice_color
+        yellow = persistent._recommended_choice_color
+        red = persistent._bad_choice_color
+        pink = persistent._dealers_choice_color
 
         _dech = "Dealers Choice"
         _goch = "Good Choice"
