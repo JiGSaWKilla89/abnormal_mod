@@ -3,7 +3,7 @@ Drop this file in your root of the game directory
 Example:
 C:\Games\Abnormal-0.7-pc\
 
-I have created a Multi-Mod with walkthrough for Academy Live!
+I have created a Multi-Mod with walkthrough for Abnormal
 
 The mod works without modifying any of the original files so theoretically it should not affect saves.
 
