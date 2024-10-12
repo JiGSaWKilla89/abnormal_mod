@@ -5,8 +5,49 @@ init 1:#Mod Defaults
     define gui.mod_update_date = "12/10/2024"
     define gui.mod_update_url = "https://github.com/JiGSaWKilla89/abnormal_mod/releases"
     define gui.mod_check_url = 'https://raw.githubusercontent.com/JiGSaWKilla89/abnormal_mod/main/version'
+    define gui.donate_mod = "https://buymeacoffee.com/jigsawgames"
     default mod_changelog = read_changelog()
     default mod_updated = "None", gui.jg_mod_version
+
+style donate_mod_text:
+    text_align 0.5
+    align (0.5,0.5)
+    outlines [(2, "#fff9", 1, 1)]
+
+style donate_mod_vbox:
+    align (0.5,0.5)
+    spacing 10
+
+style donate_mod_hbox:
+    align (0.5,0.5)
+    spacing 20
+
+style donate_mod_button:
+    align (0.5,0.5)
+
+style donate_mod_button_text:
+    text_align 0.5
+    align (0.5,0.5)
+
+
+screen support_mod_developer():
+    style_prefix "donate_mod"
+    vbox:
+        spacing 200
+        vbox:
+            text "{b}{u}[jg_1]JiG[jg_3][jg_2]SaW[jg_3] Multi-Mod{/u}{/b}" size gui.name_text_size
+            text "for [config.name] Version: [gui.jg_mod_version]"
+            text "Current Game Version: [config.version]" size gui.text_size-10 color "#FF0"
+            text "If you enjoy using my mod please consider buying me a beer."
+        hbox:
+            textbutton "Buy Me a Beer" action OpenURL(gui.donate_mod)
+            text " | "
+            textbutton "Return to Game" action Return()
+
+label before_main_menu:
+    show screen support_mod_developer
+    $ renpy.pause(hard=True)
+    return
 
 
 init 1:#Defines
