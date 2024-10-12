@@ -1,4 +1,4 @@
-I have created a Multi-Mod with walkthrough for Abnormal!
+I have created a Multi-Mod with walkthrough for Abnormal by Emerald Deceivers
 
 The mod works without modifying any of the original files so theoretically it should not affect saves.
 
