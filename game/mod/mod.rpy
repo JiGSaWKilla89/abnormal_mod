@@ -404,6 +404,11 @@ init -5 python:
                 _choice_color = valid.get("color", None)
                 _choice_size  = valid.get("size", None)
 
+                try:
+                    _choice_color = _choice_color.hexcode
+                except:
+                    _choice_color = _choice_color
+
                 if _choice_color in [None, "None", "none"]:
                     _choice_color = gui.text_color
 
