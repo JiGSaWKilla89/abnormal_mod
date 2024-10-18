@@ -1,3 +1,21 @@
+init -1500 python early:
+    import os
+    import zipfile
+    zip_path = os.path.join(config.gamedir, "mod", "mutagen.zip")
+    zip_directory = os.path.join(config.gamedir, "python-packages")
+    zip_final = os.path.join(zip_directory, "mutagen")
+
+    def extract_packages(zip_path, directory, zip_final):
+
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(directory)
+
+        if os.path.exists(zip_final):
+            os.unlink(zip_path)
+
+    if os.path.exists(zip_path):
+        extract_packages(zip_path, zip_directory, zip_final)
+
 init python:
     shortcuts = """
 {size=75}{color=FB4301}JiG{/color}{color=#000}SaW{/color} Mod Shortcuts{/size}
@@ -10,6 +28,7 @@ Toggle Fancy Text Effect: {color=FB4301}E{/color}
 Toggle Fancy Text Always Effect: {color=FB4301}R{/color}
 Toggle Walkthrough: {color=FB4301}W{/color}
 Toggle Walkthrough Choice Tooltips: {color=FB4301}Shift+T{/color}
+Toggle Music Room: {color=FB4301}M{/color}
 Toggle Notifications Stack/Standard: {color=FB4301}N{/color}
 Adjust Textbox Visibility Keypad {color=FB4301}+/-{/color}
 """
@@ -632,3 +651,4 @@ init python:
         except:
             with open(os.path.join(config.basedir, file), "r", encoding="utf-8") as readfile:
                 return readfile.readlines()
+
