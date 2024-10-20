@@ -1,4 +1,4 @@
-I have created a Multi-Mod with walkthrough for Abnormal by Emerald Deceivers
+I have created a Multi-Mod with walkthrough for Abnormal by [Emerald Deceivers](http://patreon.com/EmeraldDeceivers)
 
 ![screenshot](Screenshots/01_main_menu.jpg)
 
