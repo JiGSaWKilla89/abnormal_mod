@@ -19,7 +19,7 @@ init 1:#Mod Defaults
     define gui.donate_mod = "https://buymeacoffee.com/jigsawgames"
     define gui.mod_issues = "https://github.com/JiGSaWKilla89/{}/issues/new/choose".format(gui.dev_mod_page)
     define gui.developer_name = "Emerald Deceivers"
-    define gui.developer_support = "http://patreon.com/EmeraldDeceivers"
+    define gui.developer_support = "https://www.patreon.com/EmeraldDeceivers"
     default mod_changelog = read_changelog()
     default mod_updated = "None", gui.jg_mod_version
 
