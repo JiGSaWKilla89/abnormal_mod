@@ -1,6 +1,6 @@
 I have created a Multi-Mod with walkthrough for Abnormal by Emerald Deceivers
 
-![screenshot](Screenshots/main_menu_1.jpg)
+![screenshot](Screenshots/01_main_menu_1.jpg)
 
 Mod Features:
   1. Walkthough with Suggestions. Not Really Required but just my best suggestions
