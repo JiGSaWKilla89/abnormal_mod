@@ -1,3 +1,8 @@
+Drop this file in your root of the game directory
+
+Example:
+C:\Games\Abnormal-0.7-pc\
+
 I have created a Multi-Mod with walkthrough for Abnormal by Emerald Deceivers
 
 Mod Features:
