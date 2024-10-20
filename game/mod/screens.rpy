@@ -28,8 +28,8 @@ init 5:# Screens
             textbutton _("Load") action ShowMenu("load")
 
             textbutton _("Preferences") action ShowMenu("preferences")
-
-            textbutton _("Music") action ShowMenu("musicroom")
+            if JGSLoadable("music_room") and JGSLoadable("music_room_screen") and JGSLoadable("music_room_definitions"):
+                textbutton _("Music") action ShowMenu("musicroom")
 
             if _in_replay:
 
@@ -51,7 +51,6 @@ init 5:# Screens
                 ## The quit button is banned on iOS and unnecessary on Android and
                 ## Web.
                 textbutton _("Quit") action Quit(confirm=not main_menu)
-
 
     screen main_menu():
         use mod_check()
@@ -205,11 +204,12 @@ init 5:# Screens
         text "Walkthrough"
         text "1. Walkthrough Suggestions Toggled using {a=#:None}{color=#f00}(W){/color}{/a} or in preferences menu" xoffset 50 tooltip "This can be toggled in the main menu or in the game"
         text "2. Walkthrough Tooltips Toggled using {a=#:None}{color=#f00}(Shift+T){/color}{/a} or in preferences menu" xoffset 50 tooltip "This can be toggled in the main menu or in the game"
-        text "Music Player"
-        text "1. Music Player can be Toggled ingame using {a=#:None}{color=#f00}(M){/color}{/a}" xoffset 50 tooltip "This can be toggled in the main menu or in the game"
-        text "2. Hovering over Volume Slider allows mousewheel up/down control" xoffset 50 
-        text "3. Music Credits {a=show:music_credit}Click me{/a}"  xoffset 50
-        text "4. Any Suggestions for Royalty Free Music you'd like in the game {a=[gui.mod_issues]}Here{/a}" xoffset 50 
+        if JGSLoadable("music_room") and JGSLoadable("music_room_screen") and JGSLoadable("music_room_definitions"):
+            text "Music Player"
+            text "1. Music Player can be Toggled ingame using {a=#:None}{color=#f00}(M){/color}{/a}" xoffset 50 tooltip "This can be toggled in the main menu or in the game"
+            text "2. Hovering over Volume Slider allows mousewheel up/down control" xoffset 50 
+            text "3. Music Credits {a=show:music_credit}Click me{/a}"  xoffset 50
+            text "4. Any Suggestions for Royalty Free Music you'd like in the game {a=[gui.mod_issues]}Here{/a}" xoffset 50 
         text "Quick Menu Options"
         text "1. Quick Menu Visibility Options Toggled using {a=#:None}{color=#f00}(Q){/color}{/a} or in preferences menu" xoffset 50 tooltip "This can be toggled in the main menu or in the game"
         text "2. Quick Menu Position Options Toggled Using {a=#:None}{color=#f00}(Shift+Q){/color}{/a} or in preferences menu" xoffset 50 tooltip "This can be toggled in the main menu or in the game"
@@ -399,7 +399,7 @@ init 5:# Screens
             style "return_button"
             if title == "Walkthrough Colors":
                 action Hide("color_picker_wt", transition=dissolve)
-            elif title == "Music Player Colors":
+            elif title == "Music Player Settings":
                 action Hide("color_picker_mr", transition=dissolve)
             else:
                 action Return()
@@ -410,14 +410,14 @@ init 5:# Screens
             key "game_menu":
                 if title == "Walkthrough Colors":
                     action Hide("color_picker_wt", transition=dissolve)
-                elif title == "Music Player Colors":
+                elif title == "Music Player Settings":
                     action Hide("color_picker_mr", transition=dissolve)
                 else:
                     action ShowMenu("main_menu")
         else:
             if title == "Walkthrough Colors":
                 key "game_menu" action Hide("color_picker_wt", transition=dissolve)
-            elif title == "Music Player Colors":
+            elif title == "Music Player Settings":
                 key "game_menu" action Hide("color_picker_mr", transition=dissolve)
             else:
                 key "game_menu" action Return()
@@ -435,7 +435,7 @@ init 5:# Screens
 
                     if renpy.variant("pc") or renpy.variant("web"):
 
-                        vbox:
+                        vbox: #Fullscreen
                             style_prefix "radio"
                             label _("Display\n[jg_s]")
                             textbutton _("Window"):
@@ -443,7 +443,7 @@ init 5:# Screens
                             textbutton _("Fullscreen"):
                                 action Preference("display", "fullscreen")
 
-                    vbox:
+                    vbox: #Skip
                         style_prefix "check"
                         label _("Skip\n[jg_s]")
                         textbutton _("Unseen Text"):
@@ -453,7 +453,7 @@ init 5:# Screens
                         textbutton _("Transitions"):
                             action InvertSelected(Preference("transitions", "toggle"))
 
-                    vbox:
+                    vbox: #Fancy Text
                         style_prefix "check"
                         label _("Fancy Text\n[jg_s](Shift+F)")
                         textbutton _("Enabled"):
@@ -461,7 +461,7 @@ init 5:# Screens
                         textbutton _("Disabled"):
                             action SetField(persistent, "_fancy_text", False),SetField(preferences, "text_cps", 0)
 
-                    vbox:
+                    vbox: #Savename
                         style_prefix "check"
                         label _("Savename\n[jg_s](Shift+S)")
                         textbutton _("Enabled"):
@@ -476,19 +476,19 @@ init 5:# Screens
                 hbox:
                     box_wrap True
                     if persistent._fancy_text:
-                        vbox:
+                        vbox: #Fancy Text Effect
                             style_prefix "check"
                             label _("Effect\n[jg_s](E)")
                             textbutton _("[persistent._slow_effect_title]"):
                                 action SlowEffectChange(True)
 
-                        vbox:
+                        vbox: #Fancy Text Always Effect
                             style_prefix "check"
                             label _("Always Effect\n[jg_s](R)")
                             textbutton _("[persistent._always_effect_title]"):
                                 action AlwaysEffectChange(True)
 
-                        vbox:
+                        vbox: #Effect Delay
                             style_prefix "slider"
                             label _("Effect Delay:\n[jg_s]%s Seconds"%EffectDelayDisplay())
 
@@ -508,14 +508,14 @@ init 5:# Screens
                 hbox:
                     box_wrap True
 
-                    vbox:
+                    vbox: #Choice Hotkeys
                         style_prefix "check"
                         label _("Choice Hotkeys\n[jg_s](C)")
                         textbutton _("Enabled"):
                             action SetField(persistent, "_choice_hotkeys", True)
                         textbutton _("Disabled"):
                             action SetField(persistent, "_choice_hotkeys", False)
-                    vbox:
+                    vbox: #Walkthrough
                         style_prefix "check"
                         label _("Walkthrough\n[jg_s](W)")
                         textbutton _("Enabled"):
@@ -523,7 +523,7 @@ init 5:# Screens
                         textbutton _("Disabled"):
                             action SetField(persistent, "_walkthrough", False)
                     if persistent._walkthrough:
-                        vbox:
+                        vbox: #Choice Hints
                             style_prefix "check"
                             label _("Choice Hints\n[jg_s](Shift+T)")
                             textbutton _("Enabled"):
@@ -531,7 +531,7 @@ init 5:# Screens
                             textbutton _("Disabled"):
                                 action SetField(persistent, "_choice_tooltips", False)
 
-                    vbox:
+                    vbox: #Notifications
                         style_prefix "check"
                         label _("Notifictions\n[jg_s](N)")
                         textbutton _("{size=-10}%s{/size}"%("Notification Stack" if persistent._notify_custom else "Notification Standard")):
@@ -543,18 +543,18 @@ init 5:# Screens
                 hbox:
                     box_wrap True
                     if persistent._walkthrough:
-                        vbox:
+                        vbox: #Adjust wt Colors
                             style_prefix "check"
                             label _("Adjust WT Colors\n[jg_s]")
                             textbutton _("Change") action Show("color_picker_wt", transition=dissolve)
-                    vbox:
+                    vbox: #Textbox
                         style_prefix "check"
                         label _("Textbox\n[jg_s](T)")
                         textbutton _("Enabled"):
                             action SetField(persistent, "_textbox_visible", True)
                         textbutton _("Disabled"):
                             action SetField(persistent, "_textbox_visible", False)
-                    vbox:
+                    vbox: #Quick Menu
                         style_prefix "check"
                         label _("Quick Menu\n[jg_s]")
                         textbutton _("{size=-10}Customize{/size}"):
@@ -565,33 +565,34 @@ init 5:# Screens
 
                 hbox:
                     box_wrap True
-                    vbox:
-                        style_prefix "check"
-                        label _("Music Volume\n[jg_s]{}".format("Fast" if persistent._fast_vol_music else "Slow"))
-                        textbutton _("Fast"):
-                            action SetField(persistent, "_fast_vol_music", True)
-                        textbutton _("Slow"):
-                            action SetField(persistent, "_fast_vol_music", False)
-                    vbox:
-                        style_prefix "check"
-                        label _("Music Overlay\n[jg_s]{}".format("On" if persistent._music_overlay else "Off"))
-                        textbutton _("On"):
-                            action SetField(persistent, "_music_overlay", True)
-                        textbutton _("Off"):
-                            action SetField(persistent, "_music_overlay", False)
-                    vbox:
-                        style_prefix "check"
-                        label _("Main Menu Music\n[jg_s]{}".format("On" if persistent._main_menu_track else "Off"))
-                        textbutton _("On"):
-                            if persistent._main_menu_track:
-                                action NullAction()
-                            else:
-                                action SetField(persistent, "_main_menu_track", True), Play("music", PunchDeckAliveInstrumental)
-                            selected persistent._main_menu_track
-                        textbutton _("Off"):
-                            action SetField(persistent, "_main_menu_track", False), Stop("music")
-                            selected not persistent._main_menu_track
-                    vbox:
+                    if JGSLoadable("music_room") and JGSLoadable("music_room_screen") and JGSLoadable("music_room_definitions"):
+                        vbox: #Music Volume
+                            style_prefix "check"
+                            label _("Music Volume\n[jg_s]{}".format("Fast" if persistent._fast_vol_music else "Slow"))
+                            textbutton _("Fast"):
+                                action SetField(persistent, "_fast_vol_music", True)
+                            textbutton _("Slow"):
+                                action SetField(persistent, "_fast_vol_music", False)
+                        vbox: #Music Overlay
+                            style_prefix "check"
+                            label _("Music Overlay\n[jg_s]{}".format("On" if persistent._music_overlay else "Off"))
+                            textbutton _("On"):
+                                action SetField(persistent, "_music_overlay", True)
+                            textbutton _("Off"):
+                                action SetField(persistent, "_music_overlay", False)
+                        vbox: #Main Menu Music
+                            style_prefix "check"
+                            label _("Main Menu Music\n[jg_s]{}".format("On" if persistent._main_menu_track else "Off"))
+                            textbutton _("On"):
+                                if persistent._main_menu_track:
+                                    action NullAction()
+                                else:
+                                    action SetField(persistent, "_main_menu_track", True), Play("music", PunchDeckAliveInstrumental)
+                                selected persistent._main_menu_track
+                            textbutton _("Off"):
+                                action SetField(persistent, "_main_menu_track", False), Stop("music")
+                                selected not persistent._main_menu_track
+                    vbox: #Support Mod
                         style_prefix "check"
                         label _("Support Mod\n[jg_s]{}".format("On" if persistent._support_mod_display else "Off"))
                         textbutton _("On"):
@@ -900,7 +901,7 @@ init 5:# Screens
 
         textbutton "?":
             action NullAction() 
-            tooltip wt_choice_tooltip
+            tooltip fix_multiline(wt_choice_tooltip)
             style "_default"
             text_style "_default"
             text_size 50

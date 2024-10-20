@@ -416,7 +416,7 @@ screen color_picker_mr():
     default activate = False
     default option = ""
     default field = ""
-    use game_menu("Music Player Colors"):
+    use game_menu("Music Player Settings"):
         vbox:
             spacing 20
             vbox:

@@ -16,28 +16,49 @@ init -1500 python early:
     if os.path.exists(zip_path):
         extract_packages(zip_path, zip_directory, zip_final)
 
-init python:
-    shortcuts = """
-{size=75}{color=FB4301}JiG{/color}{color=#000}SaW{/color} Mod Shortcuts{/size}
+init -500 python:
+    def JGSLoadable(item, ext=".rpy"):
+        return renpy.loadable("mod/{}{}".format(item,ext))
 
-Toggle Textbox Shortcut: {color=FB4301}T{/color}
-Toggle Choice Hotkeys: {color=FB4301}C{/color}
-Toggle Custom Savenames: {color=FB4301}Shift+S{/color}
-Toggle Fancy Text: {color=FB4301}Shift+F{/color}
-Toggle Fancy Text Effect: {color=FB4301}E{/color}
-Toggle Fancy Text Always Effect: {color=FB4301}R{/color}
-Toggle Walkthrough: {color=FB4301}W{/color}
-Toggle Walkthrough Choice Tooltips: {color=FB4301}Shift+T{/color}
-Toggle Music Room: {color=FB4301}M{/color}
-Toggle Notifications Stack/Standard: {color=FB4301}N{/color}
-Adjust Textbox Visibility Keypad {color=FB4301}+/-{/color}
-"""
+init python:
+    if JGSLoadable("music_room") and JGSLoadable("music_room_screen") and JGSLoadable("music_room_definitions"):
+        shortcuts = """
+            {size=75}{color=FB4301}JiG{/color}{color=#000}SaW{/color} Mod Shortcuts{/size}
+
+            Toggle Textbox Shortcut: {color=FB4301}T{/color}
+            Toggle Choice Hotkeys: {color=FB4301}C{/color}
+            Toggle Custom Savenames: {color=FB4301}Shift+S{/color}
+            Toggle Fancy Text: {color=FB4301}Shift+F{/color}
+            Toggle Fancy Text Effect: {color=FB4301}E{/color}
+            Toggle Fancy Text Always Effect: {color=FB4301}R{/color}
+            Toggle Walkthrough: {color=FB4301}W{/color}
+            Toggle Walkthrough Choice Tooltips: {color=FB4301}Shift+T{/color}
+            Toggle Music Room: {color=FB4301}M{/color}
+            Toggle Notifications Stack/Standard: {color=FB4301}N{/color}
+            Adjust Textbox Visibility Keypad {color=FB4301}+/-{/color}
+            """
+    else:
+        shortcuts = """
+            {size=75}{color=FB4301}JiG{/color}{color=#000}SaW{/color} Mod Shortcuts{/size}
+
+            Toggle Textbox Shortcut: {color=FB4301}T{/color}
+            Toggle Choice Hotkeys: {color=FB4301}C{/color}
+            Toggle Custom Savenames: {color=FB4301}Shift+S{/color}
+            Toggle Fancy Text: {color=FB4301}Shift+F{/color}
+            Toggle Fancy Text Effect: {color=FB4301}E{/color}
+            Toggle Fancy Text Always Effect: {color=FB4301}R{/color}
+            Toggle Walkthrough: {color=FB4301}W{/color}
+            Toggle Walkthrough Choice Tooltips: {color=FB4301}Shift+T{/color}
+            Toggle Notifications Stack/Standard: {color=FB4301}N{/color}
+            Adjust Textbox Visibility Keypad {color=FB4301}+/-{/color}
+            """
 
     wt_choice_tooltip = """Each Choice marked with either Good Choice/Bad Choice is
-just a recommendation from me.
-You play the game the way you want."""
+        just a recommendation from me.
+        You play the game the way you want."""
 
 init -5 python:
+    
     import time
     import operator
     config.developer = True
@@ -144,6 +165,9 @@ init -5 python:
         ]
     
     bypass_list = [i.strip() for i in bypass_list]
+
+    def fix_multiline(string, count=12):
+        return string.replace(" "*count,"")
 
     def adjust_brightness(hex_color, levels):
         def clamp(value):
@@ -627,7 +651,7 @@ label splashscreen:
     return
 
 init 1:
-    image splashText = Text(shortcuts.strip(), style="splash")
+    image splashText = Text(fix_multiline(shortcuts).strip(), style="splash")
     default preferences.text_cps = 120
     default persistent._unlocked_gallery = False
     default persistent._show_empty_gallery = False
