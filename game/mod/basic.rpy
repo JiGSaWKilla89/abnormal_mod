@@ -22,6 +22,7 @@ init 1:#Mod Defaults
     define gui.developer_support = "https://www.patreon.com/EmeraldDeceivers"
     default mod_changelog = read_changelog()
     default mod_updated = "None", gui.jg_mod_version
+    default jgs_develop = True
 
     define gui.mod_info_size = gui.title_text_size-20
     define gui.mod_savename_input_size = gui.text_size-10
@@ -41,6 +42,7 @@ style donate_mod_text:
     text_align 0.5
     align (0.5,0.5)
     outlines [(2, "#fff9", 1, 1)]
+    font "mod/CM-Font.otf"
 
 style donate_mod_vbox:
     align (0.5,0.5)
@@ -68,26 +70,26 @@ screen support_mod_developer():
         timer 1 action SetLocalVariable("closing", closing-1) repeat True
     if closing == 0:
         timer .1 action Hide(),Return()
-    text "Window Will Close in: %s"%closing align (0.01, 0.01)
+    text _("Window Will Close in: %s"%closing) align (0.01, 0.01) font gui.text_font
     vbox:
         spacing 200
         vbox:
-            text "{b}{u}[jg_1]JiG[jg_3][jg_2]SaW[jg_3] Multi-Mod{/u}{/b}" size gui.name_text_size
-            text "for [config.name] Version: [gui.jg_mod_version]"
-            text "Current Game Version: [config.version]" size gui.text_size-10 color "#FF0"
-            text "If you enjoy using my mod please consider buying me a beer."
+            text _("{b}{u}[jg_1]JiG[jg_3][jg_2]SaW[jg_3] Multi-Mod{/u}{/b}") size gui.title_text_size
+            text _("for [config.name] Version: [gui.jg_mod_version]") font gui.text_font
+            text _("Current Game Version: [config.version]") size gui.text_size-10 color "#FF0" font gui.text_font
+            text _("If you enjoy using my mod please consider buying me a beer.") font gui.text_font
         hbox:
-            textbutton "Buy Me a Beer":
+            textbutton _("Buy Me a Beer"):
                 action OpenURL(gui.donate_mod)
                 hovered SetLocalVariable("hov", True)
                 unhovered SetLocalVariable("hov", False)
             text " | "
-            textbutton "Return to Game":
+            textbutton _("Return to Game"):
                 action Hide(),Return()
                 hovered SetLocalVariable("hov", True)
                 unhovered SetLocalVariable("hov", False)
     if persistent._support_mod_display:
-        textbutton "Do Not Show Again?":
+        textbutton _("Do Not Show Again?"):
             action SetField(persistent, "_support_mod_display", False)
             hovered SetLocalVariable("hov", True)
             unhovered SetLocalVariable("hov", False)
@@ -119,6 +121,10 @@ init 1:#Defines
     define config.end_game_transition = dissolve
     define config.game_main_transition = dissolve
     define config.main_game_transition = dissolve
+
+    define config.default_music_volume = 0.5
+    define config.default_sfx_volume = 0.5
+    define config.default_voice_volume = 0.5
 
 init -5 python:
     import requests

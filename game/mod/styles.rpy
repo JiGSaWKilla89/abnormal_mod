@@ -97,6 +97,7 @@ init 1:# Styles
         outlines [(2, "#a2a2a2", 1, 1)]
         text_align 0.5
         align (0.5,0.5)
+        font "mod/CabinSketch-Regular.ttf"
 
 
 style custom_caret:

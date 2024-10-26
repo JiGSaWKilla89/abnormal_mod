@@ -1,10 +1,3 @@
-default persistent._current_music_room = 1
-default persistent._music_icon_idle_color = "#FB4301"
-default persistent._music_icon_hover_color = "#000"
-default persistent._music_icon_idle_color_default = "#FB4301"
-default persistent._music_icon_hover_color_default = "#000"
-default persistent._music_overlay = True
-
 screen musicroom():
     modal True
     style_prefix "musicroom"
@@ -54,200 +47,116 @@ screen musicroom():
         vbox:
             hbox:
                 spacing 10
-                xfill True
-                imagebutton:
-                    style "imagebutton_sounds"
-                    idle Transform(
-                        'mod/images/back_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/back_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    hover Transform(
-                        'mod/images/back_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/back_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    selected "back_button_selected"
-                    insensitive "back_button_insensitive"
-                    action current_room.Previous(),SetLocalVariable("timer_active", True)
-                    tooltip "Previous Track\n[current_room.previous_track]"
-                imagebutton:
-                    style "imagebutton_sounds"
-                    idle Transform(
-                        'mod/images/rewind_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/rewind_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    hover Transform(
-                        'mod/images/rewind_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/rewind_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    selected "rewind_button_selected"
-                    insensitive "rewind_button_insensitive"
-                    action current_room.Rewind()
-                    tooltip "Rewind\n[current_room.current_track]"
-                if renpy.music.is_playing(channel='music'):
-                    imagebutton:
-                        style "imagebutton_sounds"
-                        idle Transform(
-                            ('mod/images/play_outline.png' if current_room.get_pause() else 'mod/images/pause_outline.png') if not persistent._use_outline_music_buttons else ('mod/images/play_solid.png' if current_room.get_pause() else 'mod/images/pause_solid.png'),
-                            matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                            xysize=(gui.button_size,gui.button_size),
-                            align=(0.5,0.5))
-                        hover Transform(
-                            ('mod/images/play_outline.png' if current_room.get_pause() else 'mod/images/pause_outline.png') if not persistent._use_outline_music_buttons else ('mod/images/play_solid.png' if current_room.get_pause() else 'mod/images/pause_solid.png'),
-                            matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                            xysize=(gui.button_size,gui.button_size),
-                            align=(0.5,0.5))
-                        selected ("play_button_selected" if current_room.get_pause() else "pause_button_selected")
-                        insensitive ("play_button_insensitive" if current_room.get_pause() else "pause_button_insensitive")
-                        action current_room.TogglePause()
-                        tooltip "Pause/Play\n[current_room.current_track]"
-                else:
-                    imagebutton:
-                        style "imagebutton_sounds"
-                        idle Transform(
-                            'mod/images/play_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/play_solid.png',
-                            matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                            xysize=(gui.button_size,gui.button_size),
-                            align=(0.5,0.5))
-                        hover Transform(
-                            'mod/images/play_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/play_solid.png',
-                            matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                            xysize=(gui.button_size,gui.button_size),
-                            align=(0.5,0.5))
-                        selected "play_button_selected"
-                        insensitive "play_button_insensitive"
-                        action current_room.Play()
-                        tooltip "Play\n[current_room.current_track]"
-                imagebutton:
-                    style "imagebutton_sounds"
-                    idle Transform(
-                        'mod/images/stop_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/stop_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    hover Transform(
-                        'mod/images/stop_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/stop_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    selected "stop_button_selected"
-                    insensitive "stop_button_insensitive"
-                    action current_room.Stop()
-                    tooltip "Stop\n[current_room.current_track]"
-                imagebutton:
-                    style "imagebutton_sounds"
-                    idle Transform(
-                        'mod/images/fast_forward_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/fast_forward_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    hover Transform(
-                        'mod/images/fast_forward_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/fast_forward_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    selected "fast_forward_button_selected"
-                    insensitive "fast_forward_button_insensitive"
-                    action current_room.Forward()
-                    tooltip "Fast Forward\n[current_room.current_track]"
-                imagebutton:
-                    style "imagebutton_sounds"
-                    idle Transform(
-                        'mod/images/next_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/next_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    hover Transform(
-                        'mod/images/next_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/next_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    selected "next_button_selected"
-                    insensitive "next_button_insensitive"
-                    action current_room.Next(),SetLocalVariable("timer_active", True)
-                    tooltip "Next Track\n[current_room.next_track]"
-                imagebutton:
-                    style "imagebutton_sounds"
-                    idle Transform(
-                        ('mod/images/repeat_once_outline.png' if current_room.single_track else 'mod/images/repeat_outline.png') if not persistent._use_outline_music_buttons else ('mod/images/repeat_once_solid.png' if current_room.single_track else 'mod/images/repeat_solid.png'),
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    hover Transform(
-                        ('mod/images/repeat_once_outline.png' if current_room.single_track else 'mod/images/repeat_outline.png') if not persistent._use_outline_music_buttons else ('mod/images/repeat_once_solid.png' if current_room.single_track else 'mod/images/repeat_solid.png'),
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    selected ("repeat_once_button_selected" if current_room.single_track else "repeat_button_selected")
-                    insensitive ("repeat_once_button_insensitive" if current_room.single_track else "repeat_button_insensitive")
-                    action current_room.ToggleSingleTrack()
-                    tooltip "Repeat\n[current_room.current_track]"
-                imagebutton:
-                    style "imagebutton_sounds"
-                    idle Transform(
-                        ('mod/images/shuffle_outline.png' if current_room.shuffle else 'mod/images/shuffle_off_outline.png') if not persistent._use_outline_music_buttons else ('mod/images/shuffle_solid.png' if current_room.shuffle else 'mod/images/shuffle_off_solid.png') ,
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    hover Transform(
-                        ('mod/images/shuffle_outline.png' if current_room.shuffle else 'mod/images/shuffle_off_outline.png') if not persistent._use_outline_music_buttons else ('mod/images/shuffle_solid.png' if current_room.shuffle else 'mod/images/shuffle_off_solid.png') ,
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    selected ("shuffle_button_selected" if current_room.shuffle else "shuffle_off_button_selected")
-                    insensitive ("shuffle_button_insensitive" if current_room.shuffle else "shuffle_off_button_insensitive")
-                    action current_room.ToggleShuffle()
-                    tooltip "Shuffle Playlist"
-                imagebutton:
-                    style "imagebutton_sounds"
-                    idle Transform(
-                        'mod/images/settings_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/settings_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    hover Transform(
-                        'mod/images/settings_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/settings_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    selected "settings_button_selected"
-                    insensitive "settings_button_insensitive"
-                    action Show("color_picker_mr", transition=dissolve)
-                    tooltip "Settings"
-                imagebutton:
-                    style "imagebutton_sounds"
-                    idle Transform(
-                        ('mod/images/silent_outline.png' if get_mute(channel="music") == 0.0\
-                        else 'mod/images/volume_half_outline.png' if get_mute(channel="music")\
-                        > 0.0 and get_mute(channel="music") < 0.6 or get_mute(channel="music")\
-                        == 0.6 else 'mod/images/volume_outline.png') if not persistent._use_outline_music_buttons\
-                        else ('mod/images/silent_solid.png' if get_mute(channel="music") == 0.0\
-                            else 'mod/images/volume_half_solid.png' if get_mute(channel="music")\
-                            > 0.0 and get_mute(channel="music") < 0.6 or get_mute(channel="music")\
-                            == 0.6 else 'mod/images/volume_solid.png'),
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=gui.button_size_mute,
-                        align=(0.5,0.5))
-                    hover Transform(
-                        ('mod/images/silent_outline.png' if get_mute(channel="music") == 0.0\
-                        else 'mod/images/volume_half_outline.png' if get_mute(channel="music")\
-                        > 0.0 and get_mute(channel="music") < 0.6 or get_mute(channel="music")\
-                        == 0.6 else 'mod/images/volume_outline.png') if not persistent._use_outline_music_buttons\
-                        else ('mod/images/silent_solid.png' if get_mute(channel="music") == 0.0\
-                            else 'mod/images/volume_half_solid.png' if get_mute(channel="music")\
-                            > 0.0 and get_mute(channel="music") < 0.6 or get_mute(channel="music")\
-                            == 0.6 else 'mod/images/volume_solid.png'),
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=gui.button_size_mute,
-                        align=(0.5,0.5))
-                    selected "mute_player_selected"
-                    insensitive "mute_player_insensitive"
-                    action MutePlayer()
-                    tooltip "Mute Music"
                 hbox:
+                    xfill True
+                    xsize 690*2
+                    spacing 10
+                    imagebutton:
+                        style "imagebutton_sounds"
+                        idle MP_IMG("back")
+                        hover MP_IMG("back", "hover")
+                        selected "back_button_selected"
+                        insensitive "back_button_insensitive"
+                        action current_room.Previous(),SetLocalVariable("timer_active", True)
+                        tooltip _("Previous Track\n[current_room.previous_track]")
+                    imagebutton:
+                        style "imagebutton_sounds"
+                        idle MP_IMG("rewind")
+                        hover MP_IMG("rewind", "hover")
+                        selected "rewind_button_selected"
+                        insensitive "rewind_button_insensitive"
+                        action current_room.Rewind()
+                        tooltip _("Rewind\n[current_room.current_track]")
+                    if renpy.music.is_playing(channel='music'):
+                        imagebutton:
+                            style "imagebutton_sounds"
+                            idle (MP_IMG("play") if current_room.get_pause() else MP_IMG("pause"))
+                            hover (MP_IMG("play", "hover") if current_room.get_pause() else MP_IMG("pause", "hover"))
+                            selected ("play_button_selected" if current_room.get_pause() else "pause_button_selected")
+                            insensitive ("play_button_insensitive" if current_room.get_pause() else "pause_button_insensitive")
+                            action current_room.TogglePause()
+                            tooltip _("Pause/Play\n[current_room.current_track]")
+                    else:
+                        imagebutton:
+                            style "imagebutton_sounds"
+                            idle MP_IMG("play")
+                            hover MP_IMG("play", "hover")
+                            selected "play_button_selected"
+                            insensitive "play_button_insensitive"
+                            action current_room.Play()
+                            tooltip _("Play\n[current_room.current_track]")
+                    imagebutton:
+                        style "imagebutton_sounds"
+                        idle MP_IMG("stop")
+                        hover MP_IMG("stop", "hover")
+                        selected "stop_button_selected"
+                        insensitive "stop_button_insensitive"
+                        action current_room.Stop()
+                        tooltip _("Stop\n[current_room.current_track]")
+                    imagebutton:
+                        style "imagebutton_sounds"
+                        idle MP_IMG("fast_forward")
+                        hover MP_IMG("fast_forward", "hover")
+                        selected "fast_forward_button_selected"
+                        insensitive "fast_forward_button_insensitive"
+                        action current_room.Forward()
+                        tooltip _("Fast Forward\n[current_room.current_track]")
+                    imagebutton:
+                        style "imagebutton_sounds"
+                        idle MP_IMG("next")
+                        hover MP_IMG("next", "hover")
+                        selected "next_button_selected"
+                        insensitive "next_button_insensitive"
+                        action current_room.Next(),SetLocalVariable("timer_active", True)
+                        tooltip _("Next Track\n[current_room.next_track]")
+                    imagebutton:
+                        style "imagebutton_sounds"
+                        idle (MP_IMG("repeat_once") if current_room.single_track else MP_IMG("repeat"))
+                        hover ((MP_IMG("repeat", "hover") if current_room.single_track else MP_IMG("repeat_once", "hover"))\
+                            if current_room.single_track else (MP_IMG("repeat_once", "hover") if not  current_room.single_track else MP_IMG("repeat", "hover")))
+                        selected ("repeat_once_button_selected" if current_room.single_track else "repeat_button_selected")
+                        insensitive ("repeat_once_button_insensitive" if current_room.single_track else "repeat_button_insensitive")
+                        action current_room.ToggleSingleTrack()
+                        tooltip _("Repeat\n[current_room.current_track]")
+                    imagebutton:
+                        style "imagebutton_sounds"
+                        idle (MP_IMG("shuffle") if current_room.shuffle else MP_IMG("shuffle_off"))
+                        hover ((MP_IMG("shuffle_off","hover") if current_room.shuffle else MP_IMG("shuffle","hover"))\
+                            if current_room.shuffle else (MP_IMG("shuffle","hover") if not current_room.shuffle else MP_IMG("shuffle_off","hover")))
+                        selected ("shuffle_button_selected" if current_room.shuffle else "shuffle_off_button_selected")
+                        insensitive ("shuffle_button_insensitive" if current_room.shuffle else "shuffle_off_button_insensitive")
+                        action current_room.ToggleShuffle()
+                        tooltip _("Shuffle Playlist")
+                    #imagebutton:
+                    #    style "imagebutton_sounds"
+                    #    idle (MP_IMG("unlocked") if show_locked else MP_IMG("locked"))
+                    #    hover (MP_IMG("unlocked", "hover") if show_locked else MP_IMG("locked","hover"))
+                    #    selected ("unlocked_button_selected" if show_locked else "locked_button_selected")
+                    #    insensitive ("unlocked_button_insensitive" if show_locked else "locked_button_insensitive")
+                    #    action ToggleLocalVariable("show_locked")
+                    #    tooltip _("Show Locked\n[current_room.current_track]")
+                    imagebutton:
+                        style "imagebutton_sounds"
+                        idle MP_IMG("settings")
+                        hover MP_IMG("settings", "hover")
+                        action Show("color_picker_mr", transition=dissolve)
+                        tooltip _("Settings")
+                    imagebutton:
+                        style "imagebutton_sounds"
+                        idle (MP_IMG("silent",size=gui.button_size_mute) if get_mute(channel="music") == 0.0\
+                            else MP_IMG("volume_half",size=gui.button_size_mute) if get_mute(channel="music")\
+                            > 0.0 and get_mute(channel="music") < 0.6 or get_mute(channel="music")\
+                            == 0.6 else MP_IMG("volume",size=gui.button_size_mute))
+                        hover (MP_IMG("silent","hover",size=gui.button_size_mute) if get_mute(channel="music") == 0.0\
+                            else MP_IMG("volume_half","hover",size=gui.button_size_mute) if get_mute(channel="music")\
+                            > 0.0 and get_mute(channel="music") < 0.6 or get_mute(channel="music")\
+                            == 0.6 else MP_IMG("volume","hover",size=gui.button_size_mute))
+                        selected "mute_player_selected"
+                        insensitive "mute_player_insensitive"
+                        action MutePlayer()
+                        tooltip _("Mute Music")
+                hbox:
+                    xsize 720*2
                     spacing 5
                     xalign 1.0
                     add "readablePos" yalign 0.0 yoffset -5
@@ -255,30 +164,30 @@ screen musicroom():
                         if not timer_active:
                             hovered barvalue.hovered
                             unhovered barvalue.unhovered
-                            tooltip "Progress\n[current_room.current_track]"
-                        base_bar Frame(Solid(persistent._music_icon_idle_color), gui.slider_borders, tile=gui.slider_tile)
-                        hover_base_bar Frame(Solid(persistent._music_icon_hover_color), gui.slider_borders, tile=gui.slider_tile)
-                        thumb Transform(Solid(persistent._music_icon_hover_color),ysize=gui.slider_size, xsize=30)
-                        hover_thumb Transform(Solid(persistent._music_icon_idle_color),ysize=gui.slider_size, xsize=30)
+                            tooltip _("Progress\n[current_room.current_track]")
+                        base_bar MP_BAR("idle")
+                        hover_base_bar MP_BAR("hover")
+                        thumb MP_THUMB("hover")
+                        hover_thumb MP_THUMB("idle")
                         
                     add "readableDur" yalign 0.0 yoffset -5
             hbox:
                 xfill True            
                 vbox:
                     xalign 0.0
-                    label _("Music Volume: %s"%VolumeDisplay('music')) xalign 0.0 text_color persistent._music_icon_idle_color
+                    label _("Music Volume: %s"%VolumeDisplay('music')) xalign 0.0 text_color MP_TEXT("idle")
                 vbox:
                     xalign 1.0
-                    bar value Preference("music volume") xalign 1.0 tooltip "Volume\n{}".format(VolumeDisplay('music')):
+                    bar value Preference("music volume") xalign 1.0 tooltip _("Volume\n{}".format(VolumeDisplay('music'))):
                         hovered SetLocalVariable("mouse_active", True)
                         unhovered SetLocalVariable("mouse_active", False)
-                        base_bar Frame(Solid(persistent._music_icon_idle_color), gui.slider_borders, tile=gui.slider_tile)
-                        hover_base_bar Frame(Solid(persistent._music_icon_hover_color), gui.slider_borders, tile=gui.slider_tile)
-                        thumb Transform(Solid(persistent._music_icon_hover_color),ysize=gui.slider_size, xsize=30)
-                        hover_thumb Transform(Solid(persistent._music_icon_idle_color),ysize=gui.slider_size, xsize=30)
+                        base_bar MP_BAR("idle")
+                        hover_base_bar MP_BAR("hover")
+                        thumb MP_THUMB("hover")
+                        hover_thumb MP_THUMB("idle")
             hbox:
                 xfill True
-                text "Moods"
+                text _("Moods")
                 for i in playlist_data:
                     if getattr(store, i[0]):
                         textbutton i[3]:
@@ -334,25 +243,25 @@ screen musicroom():
                                                 if GetMusicPlaying(current_room).filename == track:
                                                     at music_playing_trans
                                                 action current_room.Play(track),SelectedIf(current_room.Play(track)), SetLocalVariable("currentTrack", track)
-                                                text_color persistent._music_icon_idle_color
-                                                text_hover_color persistent._music_icon_hover_color
+                                                text_color MP_TEXT("idle")
+                                                text_hover_color MP_TEXT("hover")
                                                 text_selected_color gui.selected_color
                                             hbox:
                                                 xalign 1.0
                                                 textbutton "|" text_color persistent._music_icon_idle_color xalign 1.0
                                                 textbutton track_info.get("credits_license_name", "None"):
                                                     action OpenURL(track_info.get("credits_license", "None"))
-                                                    tooltip "%s License"%title
-                                                    text_color persistent._music_icon_idle_color
-                                                    text_hover_color persistent._music_icon_hover_color
+                                                    tooltip _("%s License"%title)
+                                                    text_color MP_TEXT("idle")
+                                                    text_hover_color MP_TEXT("hover")
                                                     text_selected_color gui.selected_color
                                                     xalign 1.0
                                                 textbutton "|" text_color persistent._music_icon_idle_color xalign 1.0
                                                 textbutton track_info.get("credits_link_name", "None"):
                                                     action OpenURL(track_info.get("credits_link", "None"))
-                                                    tooltip "%s Link"%title
-                                                    text_color persistent._music_icon_idle_color
-                                                    text_hover_color persistent._music_icon_hover_color
+                                                    tooltip _("%s Link"%title)
+                                                    text_color MP_TEXT("idle")
+                                                    text_hover_color MP_TEXT("hover")
                                                     text_selected_color gui.selected_color
                                                     xalign 1.0
                                     else:
@@ -363,29 +272,32 @@ screen musicroom():
                                                     if GetMusicPlaying(current_room).filename == track:
                                                         at music_playing_trans
                                                     action current_room.Play(track),SelectedIf(current_room.Play(track)), SetLocalVariable("currentTrack", track)
-                                                    text_color persistent._music_icon_idle_color
-                                                    text_hover_color persistent._music_icon_hover_color
+                                                    text_color MP_TEXT("idle")
+                                                    text_hover_color MP_TEXT("hover")
                                                     text_selected_color gui.selected_color
                                                 hbox:
                                                     xalign 1.0
                                                     textbutton "|" text_color persistent._music_icon_idle_color xalign 1.0
                                                     textbutton track_info.get("credits_license_name", "None"):
                                                         action OpenURL(track_info.get("credits_license", "None"))
-                                                        tooltip "%s License"%title
-                                                        text_color persistent._music_icon_idle_color
-                                                        text_hover_color persistent._music_icon_hover_color
+                                                        tooltip _("%s License"%title)
+                                                        text_color MP_TEXT("idle")
+                                                        text_hover_color MP_TEXT("hover")
                                                         text_selected_color gui.selected_color
                                                         xalign 1.0
                                                     textbutton "|" text_color persistent._music_icon_idle_color xalign 1.0
                                                     textbutton track_info.get("credits_link_name", "None"):
                                                         action OpenURL(track_info.get("credits_link", "None"))
-                                                        tooltip "%s Link"%title
-                                                        text_color persistent._music_icon_idle_color
-                                                        text_hover_color persistent._music_icon_hover_color
+                                                        tooltip _("%s Link"%title)
+                                                        text_color MP_TEXT("idle")
+                                                        text_hover_color MP_TEXT("hover")
                                                         text_selected_color gui.selected_color
                                                         xalign 1.0
                                         else:
-                                            textbutton _("Locked")
+                                            textbutton _("Locked"):
+                                                text_color MP_TEXT("idle")
+                                                text_hover_color MP_TEXT("hover")
+                                                text_selected_color gui.selected_color
 
     if timer_active:
         timer 3 action SetLocalVariable("timer_active", False)
@@ -409,263 +321,119 @@ screen musicroom():
         key "mousedown_4" action SlowVolUp("music","_fast_vol_music","music")
         key "mousedown_5" action SlowVolDown("music","_fast_vol_music","music")
 
-    text "Now Playing: [current_room.current_track]" align (0.99, 0.05)
+    text _("Now Playing: [current_room.current_track]") align (0.99, 0.05)
 
 screen color_picker_mr():
     modal True
     default activate = False
     default option = ""
     default field = ""
-    use game_menu("Music Player Settings"):
+    default state = "idle"
+    use game_menu(_("Music Player Settings")):
         vbox:
             spacing 20
-            vbox:
-                style_prefix "check"
-                label _("Music Volume\n[jg_s]{}".format("Fast" if persistent._fast_vol_music else "Slow"))
-                textbutton _("Fast"):
-                    action SetField(persistent, "_fast_vol_music", True)
-                textbutton _("Slow"):
-                    action SetField(persistent, "_fast_vol_music", False)
-            vbox:
-                style_prefix "check"
-                label _("Music Buttons\n[jg_s]{}".format("Solid" if persistent._use_outline_music_buttons else "Outline"))
-                textbutton _("Solid"):
-                    action SetField(persistent, "_use_outline_music_buttons", True)
-                textbutton _("Outline"):
-                    action SetField(persistent, "_use_outline_music_buttons", False)
+            hbox:
+                box_wrap True
+                vbox:
+                    style_prefix "check"
+                    label _("Music Volume\n[jg_s]{}".format("Fast" if persistent._fast_vol_music else "Slow"))
+                    textbutton _("Fast"):
+                        action SetField(persistent, "_fast_vol_music", True)
+                    textbutton _("Slow"):
+                        action SetField(persistent, "_fast_vol_music", False)
+                vbox:
+                    style_prefix "check"
+                    label _("Music Buttons\n[jg_s]{}".format("Solid" if persistent._use_outline_music_buttons else "Outline"))
+                    textbutton _("Solid"):
+                        action SetField(persistent, "_use_outline_music_buttons", True)
+                    textbutton _("Outline"):
+                        action SetField(persistent, "_use_outline_music_buttons", False)
 
+                vbox:
+                    style_prefix "check"
+                    label ("Button State\n[jg_s]{}".format("Idle" if state == "idle" else "Hover"))
+                    textbutton _("Idle"):
+                        action SetLocalVariable("state", "idle"), If(option == "_music_icon_{}_color".format(state), 
+                            true=[SetScreenVariable("activate", False), SetScreenVariable("option", ""), SetScreenVariable("field", "")])
+                    textbutton _("Hover"):
+                        action SetLocalVariable("state", "hover"), If(option == "_music_icon_{}_color".format(state), 
+                            true=[SetScreenVariable("activate", False), SetScreenVariable("option", ""), SetScreenVariable("field", "")])
+            vbox:
+                box_wrap True
+                style_prefix "check"
+                label _("FF and REW time in Seconds: %s"%(round_float(persistent._music_ff_rew)))
+                hbox:
+                    style_prefix "slider"
+                    bar value FieldValue(persistent, "_music_ff_rew", 
+                        range=9.0,
+                        offset=1.0,
+                        style="slider",
+                        max_is_zero=False,
+                        step=.1,
+                        force_step=True
+                        ) released SetField(persistent, "_music_ff_rew", round(float(persistent._music_ff_rew),2))
+                    textbutton _("Reset") action SetField(persistent, "_music_ff_rew", 1.0) yoffset -30
             hbox:
                 spacing 10
                 imagebutton:
-                    idle Transform(
-                        'mod/images/back_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/back_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                
+                    idle MP_IMG("back", state)
                     action NullAction()
                 imagebutton:
-                    idle Transform(
-                        'mod/images/rewind_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/rewind_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
+                    idle MP_IMG("rewind", state)
                     action NullAction()
                 imagebutton:
-                    idle Transform(
-                        'mod/images/play_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/play_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
+                    idle MP_IMG("play", state)
                     action NullAction()
                 imagebutton:
-                    idle Transform(
-                        'mod/images/pause_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/pause_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
+                    idle MP_IMG("pause", state)
                     action NullAction()
                 imagebutton:
-                    idle Transform(
-                        'mod/images/stop_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/stop_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
+                    idle MP_IMG("stop", state)
                     action NullAction()
                 imagebutton:
-                    idle Transform(
-                        'mod/images/fast_forward_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/fast_forward_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
+                    idle MP_IMG("fast_forward", state)
                     action NullAction()
                 imagebutton:
-                    idle Transform(
-                        'mod/images/next_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/next_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
+                    idle MP_IMG("next", state)
                     action NullAction()
                 imagebutton:
-                    idle Transform(
-                        'mod/images/repeat_once_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/repeat_once_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
+                    idle MP_IMG("repeat_once", state)
                     action NullAction()
                 imagebutton:
-                    idle Transform(
-                        'mod/images/repeat_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/repeat_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
+                    idle MP_IMG("repeat", state)
                     action NullAction()
                 imagebutton:
-                    idle Transform(
-                        'mod/images/shuffle_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/shuffle_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
+                    idle MP_IMG("shuffle", state)
                     action NullAction()
                 imagebutton:
-                    idle Transform(
-                        'mod/images/shuffle_off_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/shuffle_off_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
+                    idle MP_IMG("shuffle_off", state)
                     action NullAction()
                 imagebutton:
-                    idle Transform(
-                        'mod/images/silent_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/silent_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=gui.button_size_mute,
-                        align=(0.5,0.5))
+                    idle MP_IMG("silent", state, gui.button_size_mute)
                     action NullAction()
                 imagebutton:
-                    idle Transform(
-                        'mod/images/volume_half_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/volume_half_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=gui.button_size_mute,
-                        align=(0.5,0.5))
+                    idle MP_IMG("volume_half", state, gui.button_size_mute)
                     action NullAction()
                 imagebutton:
-                    idle Transform(
-                        'mod/images/volume_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/volume_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                        xysize=gui.button_size_mute,
-                        align=(0.5,0.5))
+                    idle MP_IMG("volume", state, gui.button_size_mute)
                     action NullAction()
             hbox:#Good Choice
                 spacing 15
                 vbox:
-                    textbutton "Set Idle Color Buttons":
+                    textbutton _("Set {} Color Buttons".format(state.title())):
                         
-                        action If(option == "_music_icon_idle_color", 
+                        action If(option == "_music_icon_{}_color".format(state), 
                             true=[SetScreenVariable("activate", False), SetScreenVariable("option", ""), SetScreenVariable("field", "")], 
-                            false=[SetScreenVariable("activate", True), SetScreenVariable("option", "_music_icon_idle_color"), SetScreenVariable("field", "_music_icon_idle_color")])
-                        text_color persistent._music_icon_idle_color
-                        text_hover_color adjust_brightness(persistent._music_icon_idle_color, -50)
+                            false=[SetScreenVariable("activate", True), SetScreenVariable("option", "_music_icon_{}_color".format(state)), SetScreenVariable("field", "_music_icon_{}_color".format(state))])
+                        text_color getattr(persistent,"_music_icon_{}_color".format(state))
+                        text_hover_color adjust_brightness(getattr(persistent,"_music_icon_{}_color".format(state)), -50)
                 vbox:
                     textbutton "Reset":
-                        action SetField(persistent, "_music_icon_idle_color", persistent._music_icon_idle_color_default) 
-                        sensitive persistent._music_icon_idle_color != persistent._music_icon_idle_color_default
-            hbox:
-                spacing 10
-                imagebutton:
-                    idle Transform(
-                        'mod/images/back_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/back_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    action NullAction()
-                imagebutton:
-                    idle Transform(
-                        'mod/images/rewind_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/rewind_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    action NullAction()
-                imagebutton:
-                    idle Transform(
-                        'mod/images/play_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/play_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    action NullAction()
-                imagebutton:
-                    idle Transform(
-                        'mod/images/pause_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/pause_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    action NullAction()
-                imagebutton:
-                    idle Transform(
-                        'mod/images/stop_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/stop_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    action NullAction()
-                imagebutton:
-                    idle Transform(
-                        'mod/images/fast_forward_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/fast_forward_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    action NullAction()
-                imagebutton:
-                    idle Transform(
-                        'mod/images/next_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/next_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    action NullAction()
-                imagebutton:
-                    idle Transform(
-                        'mod/images/repeat_once_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/repeat_once_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    action NullAction()
-                imagebutton:
-                    idle Transform(
-                        'mod/images/repeat_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/repeat_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    action NullAction()
-                imagebutton:
-                    idle Transform(
-                        'mod/images/shuffle_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/shuffle_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    action NullAction()
-                imagebutton:
-                    idle Transform(
-                        'mod/images/shuffle_off_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/shuffle_off_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=(gui.button_size,gui.button_size),
-                        align=(0.5,0.5))
-                    action NullAction()
-                imagebutton:
-                    idle Transform(
-                        'mod/images/silent_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/silent_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=gui.button_size_mute,
-                        align=(0.5,0.5))
-                    action NullAction()
-                imagebutton:
-                    idle Transform(
-                        'mod/images/volume_half_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/volume_half_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=gui.button_size_mute,
-                        align=(0.5,0.5))
-                    action NullAction()
-                imagebutton:
-                    idle Transform(
-                        'mod/images/volume_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/volume_solid.png',
-                        matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                        xysize=gui.button_size_mute,
-                        align=(0.5,0.5))
-                    action NullAction()
-            hbox:#Good Choice
-                spacing 15
-                vbox:
-                    textbutton "Set Hover Color Buttons":
-                        
-                        action If(option == "_music_icon_hover_color", 
-                            true=[SetScreenVariable("activate", False), SetScreenVariable("option", ""), SetScreenVariable("field", "")], 
-                            false=[SetScreenVariable("activate", True), SetScreenVariable("option", "_music_icon_hover_color"), SetScreenVariable("field", "_music_icon_hover_color")])
-                        text_color persistent._music_icon_hover_color
-                        text_hover_color adjust_brightness(persistent._music_icon_hover_color, -50)
-                vbox:
-                    textbutton "Reset":
-                        action SetField(persistent, "_music_icon_hover_color", persistent._music_icon_hover_color_default) 
-                        sensitive persistent._music_icon_hover_color != persistent._music_icon_hover_color_default
+                        action SetField(persistent, "_music_icon_{}_color".format(state), getattr(persistent,"_music_icon_{}_color_default".format(state)))
+                        sensitive getattr(persistent,"_music_icon_{}_color".format(state)) != getattr(persistent,"_music_icon_{}_color_default".format(state))
             
         if activate:
-            use color_picker(FieldSimpleValue(persistent,option), field)
+            use color_picker(FieldSimpleValue(persistent,option), field, (1.0,1.0))
 
 transform music_playing_trans:
     alpha 1.0
@@ -703,12 +471,12 @@ screen music_overlay():
                 vbox:
                     spacing 5
                     yalign 0.0
-                    text "Now Playing" size gui.bar_size+10
+                    text _("Now Playing") size gui.bar_size+10
                     text "[current_room.current_track]" size gui.bar_size-5 xmaximum 1000
                 hbox:
                     yalign 0.5
                     spacing 30
-                    text "Progress" size gui.text_size-10
+                    text _("Progress") size gui.text_size-10
                     hbox:
                         xalign 1.0
                         yoffset -2
@@ -722,7 +490,7 @@ screen music_overlay():
                         spacing 10
                         xsize 1000
                         xfill True
-                        text "Moods" yalign .5
+                        text _("Moods") yalign .5
                         for i in playlist_data:
                             if getattr(store, i[0]):
                                 textbutton i[3][0]:
@@ -750,102 +518,54 @@ screen music_overlay():
                         xfill True
                         imagebutton:
                             style "imagebutton_sounds"
-                            idle Transform(
-                                'mod/images/back_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/back_solid.png',
-                                matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                                xysize=(gui.button_size,gui.button_size),
-                                align=(0.5,0.5))
-                            hover Transform(
-                                'mod/images/back_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/back_solid.png',
-                                matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                                xysize=(gui.button_size,gui.button_size),
-                                align=(0.5,0.5))
+                            idle MP_IMG("back")
+                            hover MP_IMG("back", "hover")
                             selected "back_button_selected"
                             insensitive "back_button_insensitive"
                             action current_room.Previous(),SetLocalVariable("timer_active", True)
-                            tooltip "Previous Track\n[current_room.previous_track]"
+                            tooltip _("Previous Track\n%s"%(current_room.previous_track if current_room else ""))
                         if renpy.music.is_playing(channel='music'):
                             imagebutton:
                                 style "imagebutton_sounds"
-                                idle Transform(
-                                    ('mod/images/play_outline.png' if current_room.get_pause() else 'mod/images/pause_outline.png') if not persistent._use_outline_music_buttons else ('mod/images/play_solid.png' if current_room.get_pause() else 'mod/images/pause_solid.png'),
-                                    matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                                    xysize=(gui.button_size,gui.button_size),
-                                    align=(0.5,0.5))
-                                hover Transform(
-                                    ('mod/images/play_outline.png' if current_room.get_pause() else 'mod/images/pause_outline.png') if not persistent._use_outline_music_buttons else ('mod/images/play_solid.png' if current_room.get_pause() else 'mod/images/pause_solid.png'),
-                                    matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                                    xysize=(gui.button_size,gui.button_size),
-                                    align=(0.5,0.5))
+                                idle (MP_IMG("play") if current_room.get_pause() else MP_IMG("pause"))
+                                hover (MP_IMG("play", "hover") if current_room.get_pause() else MP_IMG("pause", "hover"))
                                 selected ("play_button_selected" if current_room.get_pause() else "pause_button_selected")
                                 insensitive ("play_button_insensitive" if current_room.get_pause() else "pause_button_insensitive")
                                 action current_room.TogglePause()
-                                tooltip "Pause/Play\n[current_room.current_track]"
+                                tooltip _("Pause/Play\n%s"%(current_room.current_track if current_room else ""))
                         else:
                             imagebutton:
                                 style "imagebutton_sounds"
-                                idle Transform(
-                                    'mod/images/play_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/play_solid.png',
-                                    matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                                    xysize=(gui.button_size,gui.button_size),
-                                    align=(0.5,0.5))
-                                hover Transform(
-                                    'mod/images/play_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/play_solid.png',
-                                    matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                                    xysize=(gui.button_size,gui.button_size),
-                                    align=(0.5,0.5))
+                                idle MP_IMG("play")
+                                hover MP_IMG("play", "hover")
                                 selected "play_button_selected"
                                 insensitive "play_button_insensitive"
                                 action current_room.Play()
-                                tooltip "Play\n[current_room.current_track]"
+                                tooltip _("Play\n%s"%(current_room.current_track if current_room else ""))
                         imagebutton:
                             style "imagebutton_sounds"
-                            idle Transform(
-                                'mod/images/stop_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/stop_solid.png',
-                                matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                                xysize=(gui.button_size,gui.button_size),
-                                align=(0.5,0.5))
-                            hover Transform(
-                                'mod/images/stop_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/stop_solid.png',
-                                matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                                xysize=(gui.button_size,gui.button_size),
-                                align=(0.5,0.5))
+                            idle MP_IMG("stop")
+                            hover MP_IMG("stop", "hover")
                             selected "stop_button_selected"
                             insensitive "stop_button_insensitive"
                             action current_room.Stop()
-                            tooltip "Stop\n[current_room.current_track]"
+                            tooltip _("Stop\n%s"%(current_room.current_track if current_room else ""))
                         imagebutton:
                             style "imagebutton_sounds"
-                            idle Transform(
-                                'mod/images/next_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/next_solid.png',
-                                matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                                xysize=(gui.button_size,gui.button_size),
-                                align=(0.5,0.5))
-                            hover Transform(
-                                'mod/images/next_outline.png' if not persistent._use_outline_music_buttons else 'mod/images/next_solid.png',
-                                matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                                xysize=(gui.button_size,gui.button_size),
-                                align=(0.5,0.5))
+                            idle MP_IMG("next")
+                            hover MP_IMG("next","hover")
                             selected "next_button_selected"
                             insensitive "next_button_insensitive"
                             action current_room.Next(),SetLocalVariable("timer_active", True)
-                            tooltip "Next Track\n[current_room.next_track]"
+                            tooltip _("Next Track\n%s"%(current_room.next_track if current_room else ""))
                         imagebutton:
                             style "imagebutton_sounds"
-                            idle Transform(
-                                ('mod/images/locked_outline.png' if lock else 'mod/images/unlocked_outline.png') if not persistent._use_outline_music_buttons else ('mod/images/locked_solid.png' if lock else 'mod/images/unlocked_solid.png'),
-                                matrixcolor=ColorSingle(persistent._music_icon_idle_color),
-                                xysize=(gui.button_size,gui.button_size),
-                                align=(0.5,0.5))
-                            hover Transform(
-                                ('mod/images/locked_outline.png' if lock else 'mod/images/unlocked_outline.png') if not persistent._use_outline_music_buttons else ('mod/images/locked_solid.png' if lock else 'mod/images/unlocked_solid.png'),
-                                matrixcolor=ColorSingle(persistent._music_icon_hover_color),
-                                xysize=(gui.button_size,gui.button_size),
-                                align=(0.5,0.5))
+                            idle (MP_IMG("locked") if lock else MP_IMG("unlocked"))
+                            hover (MP_IMG("locked", "hover") if lock else MP_IMG("unlocked", "hover"))
                             selected ("locked_button_selected" if lock else "unlocked_button_selected")
                             insensitive ("locked_button_insensitive" if lock else "unlocked_button_insensitive")
                             action ToggleLocalVariable("lock")
-                            tooltip "Keep Screen Active"
+                            tooltip _("Keep Screen Active")
 
     if tooltip:
         nearrect:
@@ -854,7 +574,7 @@ screen music_overlay():
             frame:
                 at choice_appear(.5)
                 style_prefix "tooltip"
-                if "Progress" in tooltip:
+                if _("Progress") in tooltip:
                     vbox:
                         text tooltip
                         add "readablePosTT" xalign 0.5

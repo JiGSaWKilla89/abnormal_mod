@@ -463,9 +463,9 @@ init python:
                 callback(self._hue.get(), self._sat.get(), self._value.get())
 
 
-screen color_picker(color, field):
+screen color_picker(color, field, align=(1.0,0.0)):
     hbox:
-        align (1.0,0.0)
+        align align
         #spacing 4
 
         add SaturationValuePicker(
@@ -486,8 +486,3 @@ screen color_picker(color, field):
             bar_invert True
             thumb Transform('mod/images/hue_picker.png',
                 matrixcolor=ColorizeMatrix(getattr(persistent, field), "#FFFFFF"))
-
-
-        
-
-        
